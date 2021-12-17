@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+
+cd /data/molesdk-pro-server
+
+echo 'migrate'
+php artisan migrate --force
+#php artisan db:seed 
+php artisan storage:link
+echo 'cache'
+php artisan config:cache
+php artisan view:cache
+php artisan api:cache
+php artisan event:cache
+
+echo "queue"
+usermod nginx -s /bin/bash
+su  nginx -c 'php artisan queue:work --sleep=3 --tries=3' &
+php-fpm &
+nginx -g "daemon off;"

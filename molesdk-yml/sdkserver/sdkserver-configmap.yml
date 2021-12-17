@@ -1,0 +1,18 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  namespace: molesdk
+  name: sdkserver-env
+data: 
+  DB_HOST: 10.0.0.100
+  REDIS_HOST: 10.0.0.100
+  DB_PASSWORD: Dm2018Pwd123
+  MAIL_PASSWORD: Dm2018Pwd123
+  REDIS_CLIENT: predis
+  APP_URL: http://sdk.misify.com
+  APP_URL_ADMINISTRATOR: http://admin.sdk.misify.com
+  APP_URL_DEVELOPER: http://developer.sdk.misify.com
+  CACHE_DRIVER: redis
+  MAIL_USERNAME: op@longame.cn
+  MAIL_FROM_ADDRESS: op@longame.cn
+  MAIL_FROM_NAME: 鼹鼠聚合平台

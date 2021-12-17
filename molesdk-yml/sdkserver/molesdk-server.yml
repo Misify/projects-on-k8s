@@ -1,0 +1,46 @@
+kind: Deployment
+apiVersion: apps/v1 
+metadata: 
+  namespace: molesdk
+  name: molesdk-server
+  labels:
+    app: sdkserver
+spec:
+  selector:
+    matchLabels:
+      app: sdkserver
+  replicas: 1 
+  strategy:
+    type: RollingUpdate 
+    rollingUpdate:
+      maxSurge: 1 
+      maxUnavailable: 0
+  template: 
+    metadata: 
+      labels:
+        app: sdkserver
+    spec:
+      containers:
+        - name: molesdk-server
+          image: msfdocker/myproject:molesdk-server
+          ports: 
+            - containerPort: 80 
+          envFrom: 
+            - configMapRef:
+                name: sdkserver-env
+            - secretRef:
+                name: sdkserver-secret
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: molesdk
+  name: sdkserver-service
+  labels:
+    app: sdkserver
+spec:
+  selector:
+    app: sdkserver
+  ports:
+    - port: 80
+      targetPort: 80

@@ -1,0 +1,40 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: molesdk
+  name: molesdk-ingress-nginx
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+spec:
+  rules:
+  - host: sdk.misify.com
+    http:
+      paths:
+      - path: / 
+        pathType: Prefix
+        backend:
+          service:
+            name: sdkserver-service
+            port:
+             number: 80
+  - host: admin.sdk.misify.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sdkadmin-service
+            port:
+             number: 80
+  - host: developer.sdk.misify.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sdkdeveloper-service
+            port:
+             number: 80

@@ -1,0 +1,41 @@
+kind: Deployment
+apiVersion: apps/v1 
+metadata: 
+  namespace: molesdk
+  name: sdk-developer
+  labels:
+    app: sdk-developer
+spec:
+  selector:
+    matchLabels:
+      app: sdk-developer
+  replicas: 1
+  strategy:
+    type: RollingUpdate 
+    rollingUpdate:
+      maxSurge: 1 
+      maxUnavailable: 0
+  template: 
+    metadata: 
+      labels:
+        app: sdk-developer
+    spec:
+      containers:
+        - name: molesdk-developerr
+          image: msfdocker/myproject:molesdk-developer
+          ports: 
+            - containerPort: 80 
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: molesdk
+  name: sdkdeveloper-service
+  labels:
+    app: sdk-developer
+spec:
+  selector:
+    app: sdk-developer
+  ports:
+    - port: 80
+      targetPort: 80
